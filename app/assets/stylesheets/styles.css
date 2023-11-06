@@ -1,0 +1,33 @@
+.group{
+  padding-left: 10rem;
+}
+
+
+
+.main {
+     display: flex;
+   flex-direction: row;
+
+}
+.signup-class {
+   position:static;
+    width: 70%;
+   height: 70% ;
+   justify-content: right;
+   align-items: center;
+margin: 1rem;
+}
+.custom-class {
+   width: 70%;
+   min-height: 100% ;
+   justify-content: right;
+   align-items: center;
+margin: 1rem;
+}
+.custom {
+   width: 30%;
+   min-height: 100% ;
+   justify-content: left;
+   align-items: center;
+    margin: 1rem;
+}

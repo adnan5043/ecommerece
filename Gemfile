@@ -64,3 +64,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "devise", "~> 4.9"
 
 gem 'bootstrap', '~> 5.1.3'
+
+gem 'carrierwave', '~> 2.2.0'

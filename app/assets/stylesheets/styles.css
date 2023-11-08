@@ -1,5 +1,11 @@
 /*                 navbar */
+/* body{
+   background-color: rgb(239, 227, 227);
+} */
+.navcol{
 
+  background-image: linear-gradient(to right, #C6EA8D, #FE90AF);
+}
 .fp{
    padding-left: 20rem;
 }
@@ -26,6 +32,12 @@
 .profiles{
    margin-top: 2rem;
    width: 20%;
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 /*                         signup & sigin device  */
 .main {
@@ -54,4 +66,17 @@ margin: 1rem;
    justify-content: left;
    align-items: center;
     margin: 1rem;
+}
+/* ==============================slider=================== */
+
+
+.slidcol{
+   background-color: rgb(183, 172, 172);
+}
+
+.slidimg{
+   margin-left:5rem;
+}
+.slidtext{
+   margin:10rem 0rem 10rem 15rem;
 }

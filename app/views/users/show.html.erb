@@ -1,5 +1,5 @@
 
-
+<div class="container">
 <% if current_user.image_url.present? %>
   <p>
     <!-- <strong>image:</strong> -->
@@ -14,3 +14,4 @@
 
 
 <%= button_to 'Logout', destroy_user_session_path, :class =>'buttons', method: "delete", data: { confirm: 'Are you sure?' } %>
+</div>

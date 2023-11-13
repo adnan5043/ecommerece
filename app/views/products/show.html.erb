@@ -20,6 +20,17 @@
  <%= @product.serial_number %>
 </p>
 
+<div class="image-gallery">
+  <% @images.each do |image| %>
+    <% if image.image.present? %>
+      <%= image_tag(image.image.url, class: 'product-image') %>
+    <% else %>
+      <p>No image available</p>
+    <% end %>
+  <% end %>
+</div>
+
+
 <% if user_signed_in? && current_user == @product.user %>
 <%= link_to 'Edit', edit_product_path(@product) %>
 <%end%>

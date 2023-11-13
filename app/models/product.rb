@@ -1,5 +1,12 @@
 class Product < ApplicationRecord
   belongs_to :user
+
+# ========================product image uploader==============
+  has_many :images, dependent: :destroy
+
+  accepts_nested_attributes_for :images, allow_destroy: true
+
+
 # ===========================serial number=============
   before_create :generate_serial_number
 

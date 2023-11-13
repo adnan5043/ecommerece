@@ -6,6 +6,7 @@ end
 
   def new
     @product = current_user.products.build
+    @product.images.build
   end
 
   def create
@@ -18,11 +19,16 @@ end
   end
   def show
   @product = Product.find(params[:id])
+    @images = @product.images
 end
 
-  def edit
-    @product = current_user.products.find(params[:id])
-  end
+def edit
+  @product = current_user.products.find(params[:id])
+  num_additional_images = 1 - @product.images.size
+
+  num_additional_images.times { @product.images.build }
+end
+
 
   def update
     @product = current_user.products.find(params[:id])
@@ -42,7 +48,7 @@ end
   private
 
   def product_params
-    params.require(:product).permit(:title, :price)
+    params.require(:product).permit(:title, :price,images_attributes: [:id, :image, :_destroy])
   end
 
 

@@ -15,6 +15,11 @@
   <%= number_to_currency(@product.price, precision: 2, strip_insignificant_zeros: true) %>
 </p>
 
+<p>
+  <strong>Serial Number:</strong>
+ <%= @product.serial_number %>
+</p>
+
 <% if user_signed_in? && current_user == @product.user %>
 <%= link_to 'Edit', edit_product_path(@product) %>
 <%end%>

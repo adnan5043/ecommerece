@@ -2,6 +2,9 @@
 /* body{
    background-color: rgb(239, 227, 227);
 } */
+body {
+  overflow-x: hidden;
+}
 .navcol{
 
   background-image: linear-gradient(to right, #C6EA8D, #FE90AF);
@@ -80,3 +83,36 @@ margin: 1rem;
 .slidtext{
    margin:10rem 0rem 10rem 15rem;
 }
+
+
+/* =============================banner================= */
+.banner{
+background-color:rgb(25, 24, 24);
+ width: 100%;
+ height: 100%;
+ margin-top: 7px;
+}
+.newpr{
+   padding: 4rem;
+   text-align: center;
+   color: white;
+}
+
+/* ==========================product ============ */
+
+.cardsetting{
+   margin-top: 1rem;
+   margin-bottom: 2rem;
+
+}
+.card{
+  width: 100%;
+  height: 100%;
+/*   min-height: 50vh; */
+}
+.cardpic{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+

@@ -1,5 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :user
+    has_many :comments, dependent: :destroy
 
 # ========================product image uploader==============
   has_many :images, dependent: :destroy

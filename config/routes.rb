@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-resources :products
 
-
+resources :products do
+  resources :comments
+end
 get 'profile' => 'users#show'
  # get 'welcome/index'
 

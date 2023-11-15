@@ -37,4 +37,11 @@
 <%end%>
 <br>
 <%= link_to 'Back', root_path %>
+
+
+<h2>Comments</h2>
+<%= render @product.comments %>
+
+<h2>Add a comment:</h2>
+<%= render 'comments/form' %>
 </div>

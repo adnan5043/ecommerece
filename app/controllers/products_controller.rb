@@ -20,6 +20,7 @@ end
   def show
   @product = Product.find(params[:id])
     @images = @product.images
+     @comment = Comment.new
 end
 
 def edit

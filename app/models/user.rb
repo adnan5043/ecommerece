@@ -1,11 +1,11 @@
 class User < ApplicationRecord
 
+# ========================product===================
     has_many :products
-
+# ++++++++++++++++++++++++Comment+++++++++++++++++++
  has_many :comments
 
-    # ++++=++++++++++++++++++++  device ++++++++++++======
-
+    # ++++=++++++++++++++++++++ user  device ++++++++++++======
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

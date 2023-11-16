@@ -1,9 +1,8 @@
 class CommentsController < ApplicationController
-# app/controllers/comments_controller.rb
+
 
 before_action :set_product
 before_action :set_comment, only: [:edit, :update, :destroy]
-before_action :check_comment_owner, only: [:edit, :update, :destroy]
 before_action :check_comment_on_own_product, only: [:create]
 
 def create
@@ -19,7 +18,6 @@ def create
 end
 
 def edit
-  # Fetch the comment to be edited
    @comment
 end
 
@@ -44,10 +42,6 @@ end
 
 def set_comment
   @comment = Comment.find(params[:id])
-end
-
-def check_comment_owner
-  redirect_to @product, notice: 'You are not authorized to perform this action.' unless current_user.id == @comment.user_id
 end
 
 def check_comment_on_own_product

@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
+ resources :order_items, only: [:show, :create, :new, :index]
+  resources :cards, only:[:show]
   resources :products do
     resources :comments, only: [:create, :update, :destroy, :edit]
   end
-get 'profile' => 'users#show'
+   get 'profile' => 'users#show'
  # get 'welcome/index'
 
   devise_for :users

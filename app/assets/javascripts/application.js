@@ -13,11 +13,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery
+//= require jquery_ujs
 //= require_tree .
 //= require bootstrap
-
-import 'turbo-rails'
-
-document.addEventListener("turbo:load", function() {
-  // Your JavaScript code for handling TurboDrive events
-});

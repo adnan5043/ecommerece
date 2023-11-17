@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user! # Ensure user is logged in
 def index
   @products = Product.all
+
 end
 
   def new
@@ -19,6 +20,7 @@ end
   end
   def show
   @product = Product.find(params[:id])
+  @order_item = current_order.order_items.new
     @images = @product.images
      @comment = Comment.new
 end

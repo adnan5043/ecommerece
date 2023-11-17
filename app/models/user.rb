@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-
+  has_many :orders
 # ========================product===================
     has_many :products
 # ++++++++++++++++++++++++Comment+++++++++++++++++++

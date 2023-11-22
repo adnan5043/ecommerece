@@ -32,22 +32,26 @@
 <div>
 <% if user_signed_in? && current_user == @product.user %>
 <%= link_to 'Edit', edit_product_path(@product) %>|
-<td><%= link_to 'Destroy', @product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<%= link_to 'Destroy', @product, method: :delete, data: { confirm: 'Are you sure?' } %>
 <%end%>
 </div>
 <br>
 <div class="d-flex">
-  <%= form_for @order_item, remote: true do |f| %>
+  <%= form_for @order_item, remote: true  do |f| %>
     <%= csrf_meta_tags %>
     <%= f.hidden_field :product_id, value: @product.id %>
     <%= f.number_field :quantity, value: 1, main: 1 %>
-    <%= f.submit "Add to Cart" %>
+    <% if user_signed_in? && current_user != @product.user %>
+    <%= f.submit "Add to Cart"%>
+<% end %>
+
+<div id="card-i">
+   <%= render partial: 'cards/card', locals: {id: @order_item.order.id} %>
+</div>
   <% end %>
+
 </div>
 
-<div id="card">
-   <%= render 'cards/card' %>
-</div>
 <br>
 <!-- <h2>Add a comment:</h2> -->
 <%= render 'comments/form' %>
@@ -57,3 +61,6 @@
 
 
 </div>
+
+
+

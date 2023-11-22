@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
- resources :order_items, only: [:show, :create, :new, :index]
+resources :order_items, only: [:show, :create, :new, :index, :update, :destroy]
   resources :cards, only:[:show]
   resources :products do
     resources :comments, only: [:create, :update, :destroy, :edit]

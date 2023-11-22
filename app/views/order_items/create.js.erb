@@ -1,2 +1,3 @@
-$('#card').html("<%= escape_javascript(render('cards/card'))%>")
+$('#card-i').html('<%= j render(partial: "cards/card", locals: {id: @order.id}) %>');
+
 

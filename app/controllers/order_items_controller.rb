@@ -1,21 +1,36 @@
 class OrderItemsController < ApplicationController
 def create
   @order = current_order
-  @order_item = @order.order_items.new(order_params)
+  @order_item = @order.order_items.find_or_initialize_by(product_id: params[:order_item][:product_id])
 
-  respond_to do |format|
-    if @order.save
-      session[:order_id] = @order.id
-      format.js
+  # Ensure @order is not nil before accessing its id
+  if @order && @order_item
+    # If the item already exists in the order, update the quantity
+    if @order_item.persisted?
+      @order_item.quantity += params[:order_item][:quantity].to_i
     else
-      error_messages = @order_item.errors.full_messages.join(', ')
-      Rails.logger.error("Error saving order item: #{error_messages}")
-      format.js { render 'create_failed', locals: { error_messages: error_messages } }
+      # If it's a new item, set the quantity
+      @order_item.quantity = params[:order_item][:quantity].to_i
+    end
+
+    respond_to do |format|
+      if @order.save && @order_item.save
+        session[:order_id] = @order.id
+        format.js
+      else
+        error_messages = @order_item.errors.full_messages.join(', ')
+        Rails.logger.error("Error saving order item: #{error_messages}")
+        format.js { render 'create_failed', locals: { error_messages: error_messages } }
+      end
+    end
+  else
+    # Handle the case where @order or @order_item is nil
+    Rails.logger.error("Error: @order or @order_item is nil.")
+    respond_to do |format|
+      format.js { render 'create_failed', locals: { error_messages: "Error: Order or order item is nil." } }
     end
   end
 end
-
-
   def update
     @order = current_order
     @order_item = @order.order_items.find(params[:id])

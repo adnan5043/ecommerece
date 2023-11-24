@@ -2,7 +2,7 @@
   <div class="row row-cols-1 row-cols-md-4 g-3">
     <% @products.each do |product| %>
       <div class="col mb-2">
-        <div class="card ">
+        <div class="card">
           <% image = product.images.first %>
           <% if image.present? %>
             <%= image_tag(image.image.url, class: 'cardpic') %>
@@ -10,12 +10,20 @@
             <p>No image available</p>
           <% end %>
           <div class="card-body">
-            <h5 class="card-title"><%= product.title %></h5>
+            <h5 class="card-title "><%= link_to product.title, product , class: "linktitle"%> </h5>
             <p class="card-text"><%= number_to_currency(product.price, precision: 2, strip_insignificant_zeros: true) %></p>
           </div>
-          <div class="card-body d-flex  justify-content-between">
-            <a  class="card-link"><td><%= link_to 'Show', product %></td></a>
-            <!-- <a href="#" class="card-link">Another link</a> -->
+          <div class="card-body d-flex justify-content-between">
+            <%= form_for @order_item, remote: true do |f| %>
+              <%= csrf_meta_tags %>
+               <% if user_signed_in? && current_user != product.user %>
+              <%= f.hidden_field :product_id, value: product.id %>
+              <%= f.number_field :quantity, value: 1, main: 1, class: "field" %>
+
+                <%= f.submit "Add to Cart" %>
+              <% end %>
+            <% end %>
+
           </div>
         </div>
       </div>
@@ -23,3 +31,27 @@
   </div>
 </div>
 
+<!-- Add this modal at the end of your HTML body -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%# <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div> %>
+      <div class="modal-body">
+        <%= flash[:success] %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add this script at the end of your HTML body -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const flashMessage = '<%= flash[:success] %>';
+
+    if (flashMessage) {
+      $('#successModal').modal('show');
+    }
+  });
+</script>

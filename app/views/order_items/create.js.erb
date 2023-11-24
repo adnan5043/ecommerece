@@ -1,3 +1,9 @@
 $('#card-i').html('<%= j render(partial: "cards/card", locals: {id: @order.id}) %>');
 
+// Trigger the modal
+$('#successModal').modal('show');
+
+// Update the modal title and body with the success message
+$('#successModalLabel').text('Success');
+$('.modal-body').text('<%= j flash[:success] %>');
 

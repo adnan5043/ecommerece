@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container mtop">
 <p id="notice"><%= notice %></p>
 
 <h1>Product Details</h1>
@@ -36,22 +36,8 @@
 <%end%>
 </div>
 <br>
-<div class="d-flex">
-  <%= form_for @order_item, remote: true  do |f| %>
-    <%= csrf_meta_tags %>
-    <%= f.hidden_field :product_id, value: @product.id %>
-    <%= f.number_field :quantity, value: 1, main: 1 %>
-    <% if user_signed_in? && current_user != @product.user %>
-    <%= f.submit "Add to Cart"%>
-<% end %>
 
-<div id="card-i">
-   <%= render partial: 'cards/card', locals: {id: @order_item.order.id} %>
-</div>
-  <% end %>
-
-</div>
-
+<%# <%= render 'products/addcart' %>
 <br>
 <!-- <h2>Add a comment:</h2> -->
 <%= render 'comments/form' %>

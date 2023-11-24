@@ -1,0 +1,15 @@
+<div class="d-flex ">
+  <%= form_for @order_item, remote: true  do |f| %>
+    <%= csrf_meta_tags %>
+    <%= f.hidden_field :product_id, value: @product.id %>
+    <%= f.number_field :quantity, value: 1, main: 1 , class: "field"%>
+    <% if user_signed_in? && current_user != @product.user %>
+    <%= f.submit "Add to Cart"%>
+<% end %>
+
+<div id="card-i">
+   <%= render partial: 'cards/card', locals: {id: @order_item.order.id} %>
+</div>
+  <% end %>
+
+</div>

@@ -10,7 +10,8 @@ body {
   background-image: linear-gradient(to right, #C6EA8D, #FE90AF);
 }
 .fp{
-   padding-left: 20rem;
+   padding-left: 18rem;
+   padding-right: 2rem;
 }
 
 .group{
@@ -70,6 +71,10 @@ margin: 1rem;
    align-items: center;
     margin: 1rem;
 }
+/* ===============================other page================ */
+.mtop{
+   margin-top: 4.5rem;
+}
 /* ==============================slider=================== */
 
 
@@ -115,4 +120,26 @@ background-color:rgb(25, 24, 24);
   height: 100%;
   object-fit: contain;
 }
-
+.linktitle{
+   color: black;
+}
+.linktitle:hover{
+   color: green;
+}
+/* ++++++++++++++++++++++++++++++++++++ card section +++++++++++++++= */
+.field{
+   width: 25% !important;
+}
+.cartd{
+/*   display: none; */
+  color: green;
+  cursor: pointer;
+}
+.caricone{
+  font-size: 2em;
+  color: green;
+    cursor: pointer;
+}
+.caricone:hover{
+     color:rgb(29, 168, 1);
+}

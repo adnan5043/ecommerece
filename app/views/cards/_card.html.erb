@@ -1,10 +1,11 @@
 
-<div class="cartd  d-block" >
-      <%= current_order.order_items.size  %>
-  <%= link_to card_path(id), class: "bi bi-cart-plus-fill caricone " do %>
-
+<div class="cartd">
+  <%= link_to card_path(current_order.id) do %>
+    <span class="bi bi-cart-plus-fill caricone"></span>
+    <span class="cartsize"><%= current_order.order_items.size %></span>
   <% end %>
 </div>
+
 
 
 <%# <%= link_to "#{current_order.order_items.size} Item with a value of #{ current_order.subtotal}$", card_path(id) %>

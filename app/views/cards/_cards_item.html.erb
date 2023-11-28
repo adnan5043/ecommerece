@@ -25,7 +25,7 @@
                   <%= f.submit "Update Cart", class: 'hidden-update-btn', style: 'display: none;' %>
                   <%= link_to 'Delete', order_item_path(item.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'delete-link Deletebtn'%>
                 <% end %>
-
+                <br>
                 <h3>Subtotal: <span class="subtotal" data-price="<%= item.product.price %>"><%= item.total %></span>$</h3>
               </div>
             </div>
@@ -36,7 +36,7 @@
     <div class="col-lg-3 col-md-3 col-sm-12 offset-lg-0 offset-md-0 offset-sm-0 ">
       <div class="card">
         <h3>Total: <span class="total-value"><%= current_order.subtotal %></span>$</h3>
-        <h5>Implement Stripe  Payment Method</h5>
+        <h5>Implement   Payment Method</h5>
       </div>
     </div>
   </div>

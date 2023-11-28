@@ -118,7 +118,7 @@ background-color:rgb(25, 24, 24);
 }
 .linktitle{
    color: black;
-     text-decoration: none;
+text-decoration: none;
 }
 .linktitle:hover{
    color: green;
@@ -127,15 +127,19 @@ background-color:rgb(25, 24, 24);
 .field{
    width: 25% !important;
 }
-.cartd{
-/*   display: none; */
-  color: green;
-  cursor: pointer;
+
+.cartsize{
+   position: absolute;
+  color: white;
+ font-size: 1em;
+top: 5px;
+/* right: 13rem; */
 }
 .caricone{
   font-size: 2em;
   color: green;
-    cursor: pointer;
+  cursor: pointer;
+  text-decoration: none;
 }
 .caricone:hover{
      color:rgb(29, 168, 1);

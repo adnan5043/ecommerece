@@ -1,45 +1,73 @@
-<div class="container mtop  ">
+<div class="container mtop">
   <h1>WishList</h1>
   <div class="d-flex justify-content-between">
-  <div class="row ">
-    <% @order_items.each do |item| %>
-      <div class="card mb-5 col-lg-11 col-md-11 col-sm-12 cardbg">
-        <div class="row g-0">
-          <div class="col-md-4 itemcarddd">
-            <% image = item.product.images.first %>
-            <% if image.present? %>
-              <%= image_tag(image.image.url, class: 'cardpic') %>
-            <% else %>
-              <p>No image available</p>
-            <% end %>
-          </div>
-          <div class="col-md-8 ">
-            <div class="card-body">
-              <h5 class="card-title"><%= item.product.title %></h5>
-              <p><%= item.product.price %></p>
-            </div>
-            <div class="card-body">
-              <%= form_for item, remote: true do |f| %>
-                <%= f.hidden_field :product_id, value: item.product.id %>
-                <%= f.number_field :quantity, value: item.quantity.to_i %>
-                <%= f.submit "Update Cart" %>
-                   <%= link_to 'Delete', order_item_path(item.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true %>
+    <div class="row">
+      <% @order_items.each do |item| %>
+        <div class="card mb-5 col-lg-11 col-md-11 col-sm-12 cardbg">
+          <div class="row g-0">
+            <div class="col-md-4 itemcarddd">
+              <% image = item.product.images.first %>
+              <% if image.present? %>
+                <%= image_tag(image.image.url, class: 'cardpic') %>
+              <% else %>
+                <p>No image available</p>
               <% end %>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title"><%= item.product.title %></h5>
+                <p><%= item.product.price %></p>
+              </div>
+              <div class="card-body">
+                <%= form_for item, remote: true do |f| %>
+                  <%= f.hidden_field :product_id, value: item.product.id %>
+                  <%= f.number_field :quantity, value: item.quantity.to_i, class: 'quantity-input' %>
+                  <%= f.submit "Update Cart", class: 'hidden-update-btn', style: 'display: none;' %>
+                  <%= link_to 'Delete', order_item_path(item.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'delete-link' %>
+                <% end %>
 
-
-              <h3>Subtotal: <%= item.total %></h3>
+                <h3>Subtotal: <span class="subtotal" data-price="<%= item.product.price %>"><%= item.total %></span></h3>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
-
-  </div>
-    <div class="col-lg-3 col-md-3 col-sm-12 offset-lg-0 offset-md-0 offset-sm-0 ">
+      <% end %>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12 offset-lg-0 offset-md-0 offset-sm-0">
       <div class="card">
-        <h3>Total: <%= current_order.subtotal %></h3>
+        <h3>Total: <span class="total-value"><%= current_order.subtotal %></span></h3>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  $(document).ready(function() {
+    // Function to handle quantity input change
+    function handleQuantityChange() {
+      var quantity = $(this).val();
+      var price = parseFloat($(this).closest('.card-body').find('.subtotal').data('price'));
+      var subtotal = (quantity * price).toFixed(2);
+      $(this).closest('.card-body').find('.subtotal').text(subtotal);
+      updateTotal();
+    }
+
+    // Bind the input change event
+    $('.quantity-input').on('input', handleQuantityChange);
+
+    // Function to update the total
+    function updateTotal() {
+      var total = 0;
+      $('.subtotal').each(function() {
+        total += parseFloat($(this).text());
+      });
+      $('.total-value').text(total.toFixed(2));
+    }
+
+    // Bind the delete link click event using ajax:complete
+    $('.delete-link').on('ajax:complete', function() {
+      // Update the total after deletion, whether successful or not
+      updateTotal();
+    });
+  });
+</script>

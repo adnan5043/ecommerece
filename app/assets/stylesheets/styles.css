@@ -110,11 +110,7 @@ background-color:rgb(25, 24, 24);
    margin-bottom: 2rem;
 
 }
-.card{
-  width: 100%;
-  height: 100%;
-/*   min-height: 50vh; */
-}
+
 .cardpic{
   width: 100%;
   height: 100%;
@@ -143,3 +139,10 @@ background-color:rgb(25, 24, 24);
 .caricone:hover{
      color:rgb(29, 168, 1);
 }
+/* ==============================item card */
+
+.cardbg{
+background-color: rgb(211, 207, 207);
+}
+
+

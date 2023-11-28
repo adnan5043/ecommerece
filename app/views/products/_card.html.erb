@@ -2,7 +2,7 @@
   <div class="row row-cols-1 row-cols-md-4 g-3">
     <% @products.each do |product| %>
       <div class="col mb-2">
-        <div class="card">
+        <div class="card cardpic">
           <% image = product.images.first %>
           <% if image.present? %>
             <%= image_tag(image.image.url, class: 'cardpic') %>

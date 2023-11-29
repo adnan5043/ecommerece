@@ -1,8 +1,5 @@
-$('#card-i').html('<%= j render(partial: "cards/card", locals: {id: @order.id}) %>');
-$('#card-item').html('<%= j(render("cards/cards_item")) %>');
-
-
-var destroyedItemId = <%= @destroyed_item.id.to_json %>;
-
 // Remove the element with the ID corresponding to the destroyed item
-$('#card-item-' + destroyedItemId).remove();
+$('#card-item-' + <%= @destroyed_item.id.to_json %>).remove();
+
+// Update the total after successful deletion
+$('.total-value').text('<%= @order.subtotal.to_f %>'); // Assuming that subtotal is a numeric value

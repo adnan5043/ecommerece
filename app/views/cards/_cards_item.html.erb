@@ -53,9 +53,6 @@
       updateTotal();
     }
 
-    // Bind the input change event
-    $('.quantity-input').on('input', handleQuantityChange);
-
     // Function to update the total
     function updateTotal() {
       var total = 0;
@@ -65,10 +62,17 @@
       $('.total-value').text(total.toFixed(2));
     }
 
+    // Bind the input change event for quantity inputs
+    $('.quantity-input').on('input', handleQuantityChange);
+
     // Bind the delete link click event using ajax:complete
-    $('.delete-link').on('ajax:complete', function() {
-      // Update the total after deletion, whether successful or not
-      updateTotal();
+    $('.delete-link').on('ajax:complete', function(event, xhr, status) {
+      if (status === 'success') {
+        // Update the total after deletion, whether successful or not
+        updateTotal();
+      }
     });
   });
 </script>
+
+

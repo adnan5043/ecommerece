@@ -6,14 +6,18 @@ class Order < ApplicationRecord
   scope :in_progress, -> { where(status: 'in_progress') }
   before_save :set_subtotal
 
+  def update_subtotal
+    self.subtotal = calculate_subtotal
+    save
+  end
+
   def calculate_subtotal
-    order_items.collect { |order_item| order_item.valid? ? order_item.total : 0 }.sum
+    order_items.sum(&:total)
   end
 
   private
 
   def set_subtotal
-    self.subtotal=calculate_subtotal
+    self.subtotal = calculate_subtotal
   end
 end
-

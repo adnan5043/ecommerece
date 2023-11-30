@@ -1,5 +1,8 @@
 <div class="container mtop">
-  <h1>WishList</h1>
+  <div class=" d-flex justify-content-between">
+      <h1>WishList</h1>
+  <h5>  <%= link_to "Go Back Home", root_path, class: "nav-link backhome" %></h5>
+  </div>
   <div class="d-flex justify-content-between">
     <div class="row">
       <% @order_items.each do |item| %>
@@ -38,7 +41,6 @@
         <h3 class="justify-content-center align-middle text-center mt-2">Total: <span class="total-value "><%= current_order.subtotal %></span>$</h3>
         <%= image_tag 'Payment/f55.png', class: "img-fluid payment " %>
         <%= render "payments/new" %>
-        <%# <%= link_to 'Make Payment', new_order_payment_path(@order) %>
       </div>
     </div>
   </div>

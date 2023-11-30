@@ -15,12 +15,13 @@ class PaymentsController < ApplicationController
       amount: (@order.subtotal * 100).to_i,
       currency: 'usd',
       source: params[:stripeToken],
-      description: 'Payment for Order'
+      description: 'Order payment for a test Rails application'
     )
 
     @order.update(status: 'paid')
 
-    redirect_to root_path, notice: 'Payment was successful!'
+   flash[:success] = 'Payment was successful!'
+   redirect_to root_path
   rescue Stripe::CardError => e
     flash[:error] = e.message
     render :new

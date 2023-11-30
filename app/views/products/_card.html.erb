@@ -52,6 +52,8 @@
 
     if (flashMessage) {
       $('#successModal').modal('show');
+      // Clear the flash message so that it doesn't show on subsequent page loads
+      '<%= flash[:success] = nil %>';
     }
   });
 </script>

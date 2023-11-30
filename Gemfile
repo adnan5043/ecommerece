@@ -70,3 +70,7 @@ gem 'mini_magick'
 
 gem 'jquery-rails'
 
+
+gem 'stripe'
+
+gem 'dotenv-rails', groups: [:development, :test]

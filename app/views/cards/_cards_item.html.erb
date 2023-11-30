@@ -33,10 +33,12 @@
         </div>
       <% end %>
     </div>
-    <div class="col-lg-3 col-md-3 col-sm-12 offset-lg-0 offset-md-0 offset-sm-0 ">
-      <div class="card">
-        <h3>Total: <span class="total-value"><%= current_order.subtotal %></span>$</h3>
-        <h5>Implement   Payment Method</h5>
+    <div class="col-lg-3 col-md-3 col-sm-12 ">
+      <div class="card cardbg">
+        <h3 class="justify-content-center align-middle text-center mt-2">Total: <span class="total-value "><%= current_order.subtotal %></span>$</h3>
+        <%= image_tag 'Payment/f55.png', class: "img-fluid payment " %>
+        <%= render "payments/new" %>
+        <%# <%= link_to 'Make Payment', new_order_payment_path(@order) %>
       </div>
     </div>
   </div>

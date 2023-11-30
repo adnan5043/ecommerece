@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   has_many :order_items
   belongs_to :user
+  has_many :payments
   # other order model code...
 
   scope :in_progress, -> { where(status: 'in_progress') }

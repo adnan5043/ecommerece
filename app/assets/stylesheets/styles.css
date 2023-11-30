@@ -165,3 +165,24 @@ background-color: rgb(211, 207, 207);
 .quantitfield{
    width: 7rem;
 }
+/* =================================Payment+++++++++++++++++= */
+
+.paymentbutton{
+margin: 1rem 0rem 1rem 5px;
+padding: 5px 3rem 5px 3rem;
+justify-content: center;
+align-items: center;
+text-align: center;
+color: white;
+background-color: black;
+outline: none;
+border: none;
+text-decoration: none;
+border-radius: 5px;
+}
+.paymentbutton:hover{
+background-color:rgb(29, 168, 1);
+}
+/* .cardelement{
+margin: 1rem;
+} */

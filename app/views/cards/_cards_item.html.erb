@@ -39,8 +39,8 @@
     <div class="col-lg-3 col-md-3 col-sm-12 ">
       <div class="card cardbg">
         <h3 class="justify-content-center align-middle text-center mt-2">Total: <span class="total-value "><%= current_order.subtotal %></span>$</h3>
-        <%= image_tag 'Payment/f55.png', class: "img-fluid payment " %>
-        <%= render "payments/new" %>
+        <%= image_tag 'Payment/f55.png' , class: "img-fluid payment " %>
+        <%= render 'payments/new', order_id: @order.id %>
       </div>
     </div>
   </div>

@@ -20,64 +20,69 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-  function setupStripe() {
-    var stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
-    var elements = stripe.elements();
+document.addEventListener('turbolinks:load', function () {
+  setupStripe();
+});
 
-    // Create an instance of the card Element.
-    var card = elements.create('card');
+function setupStripe() {
+  var stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+  var elements = stripe.elements();
+  var form = document.getElementById('payment-form');
+  var paymentButton = form.querySelector('.paymentbutton');
 
-    // Add an instance of the card Element into the `card-element` div.
-    card.mount('#card-element');
+  // Create an instance of the card Element.
+  var card = elements.create('card');
 
-    // Handle real-time validation errors from the card Element.
-    card.addEventListener('change', function(event) {
-      var displayError = document.getElementById('card-errors');
-      if (event.error) {
-        displayError.textContent = event.error.message;
+  // Add an instance of the card Element into the `card-element` div.
+  card.mount('#card-element');
+
+  // Handle real-time validation errors from the card Element.
+  card.addEventListener('change', function(event) {
+    var displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+
+  // Handle form submission.
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Disable the button to prevent multiple submissions
+    paymentButton.disabled = true;
+
+    // Additional data to be sent to the server
+    var additionalData = {
+      name: document.getElementById('user_name').value,
+      email: document.getElementById('user_email').value
+    };
+
+    stripe.createToken(card, additionalData).then(function(result) {
+      if (result.error) {
+        // Inform the user if there was an error.
+        var errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
       } else {
-        displayError.textContent = '';
+        // Send the token to your server.
+        stripeTokenHandler(result.token);
       }
     });
+  });
 
-    // Handle form submission.
-    var form = document.getElementById('payment-form');
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
+  // Submit the form with the token ID.
+  function stripeTokenHandler(token) {
+    var hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('name', 'stripeToken');
+    hiddenInput.setAttribute('value', token.id);
+    form.appendChild(hiddenInput);
 
-      // Additional data to be sent to the server
-      var additionalData = {
-        name: document.getElementById('user_name').value,
-        email: document.getElementById('user_email').value
-      };
-
-      stripe.createToken(card, additionalData).then(function(result) {
-        if (result.error) {
-          // Inform the user if there was an error.
-          var errorElement = document.getElementById('card-errors');
-          errorElement.textContent = result.error.message;
-        } else {
-          // Send the token to your server.
-          stripeTokenHandler(result.token);
-        }
-      });
-    });
-
-    // Submit the form with the token ID.
-    function stripeTokenHandler(token) {
-      var form = document.getElementById('payment-form');
-      var hiddenInput = document.createElement('input');
-      hiddenInput.setAttribute('type', 'hidden');
-      hiddenInput.setAttribute('name', 'stripeToken');
-      hiddenInput.setAttribute('value', token.id);
-      form.appendChild(hiddenInput);
-
-      // Submit the form
-      form.submit();
-    }
+    // Submit the form
+    form.submit();
   }
-
-  // Run the setupStripe function initially
-  setupStripe();
+}
 </script>
+
 

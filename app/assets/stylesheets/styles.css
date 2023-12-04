@@ -197,3 +197,16 @@ margin: 1rem;
    background-color: green;
    color: white;
 }
+
+/* ==========================transection record  */
+  .justify-content-around th {
+    padding:0px 2rem; /* Adjust the padding as needed */
+  }
+
+  .text-center th {
+    text-align: center;
+  }
+
+  td, th {
+    padding: 6px 2rem; /* Adjust the padding as needed */
+  }

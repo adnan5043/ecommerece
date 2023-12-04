@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_29_092814) do
+ActiveRecord::Schema.define(version: 2023_12_03_080401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,18 @@ ActiveRecord::Schema.define(version: 2023_11_29_092814) do
     t.string "serial_number"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "order_id"
+    t.string "title"
+    t.decimal "price"
+    t.integer "quantity"
+    t.decimal "fee_charges"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "datetime"
+    t.index ["order_id"], name: "index_transactions_on_order_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -90,4 +102,5 @@ ActiveRecord::Schema.define(version: 2023_11_29_092814) do
   add_foreign_key "images", "products"
   add_foreign_key "new_orders", "users"
   add_foreign_key "orders", "users"
+  add_foreign_key "transactions", "orders"
 end

@@ -3,6 +3,11 @@ class ProductsController < ApplicationController
 def index
   @products = Product.all
 end
+  def search
+      @products = Product.where("title ILIKE ?", "%#{params[:search]}%")
+    @order_item = OrderItem.new
+    render 'search'
+  end
 
   def new
     @product = current_user.products.build

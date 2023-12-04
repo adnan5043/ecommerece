@@ -1,0 +1,58 @@
+<div class="container mtop">
+  <div class="d-flex justify-content-between">
+  <h1>Transaction Records</h1>
+  <h5>  <%= link_to "Go Back Home", root_path, class: "nav-link backhome" %></h5>
+  </div>
+  <table>
+    <thead>
+      <tr class="justify-content-around text-center">
+        <th>Title</th>
+        <th>Price</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @orders.present? %>
+        <% @orders.each do |order| %>
+          <% order.order_items.each do |order_item| %>
+            <tr>
+              <td><%= order_item.product.title %></td>
+              <td><%= order_item.product.price %></td>
+              <td><%= order_item.quantity %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="4">No transactions available.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%# <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Success</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div> %>
+      <div class="modal-body">
+        <%= flash[:success] %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add this script at the end of your HTML body -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const flashMessage = '<%= flash[:success] %>';
+
+    if (flashMessage) {
+      $('#successModal').modal('show');
+      // Clear the flash message so that it doesn't show on subsequent page loads
+      '<%= flash[:success] = nil %>';
+    }
+  });
+</script>

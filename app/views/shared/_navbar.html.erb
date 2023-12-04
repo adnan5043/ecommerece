@@ -19,10 +19,11 @@
           <a class="nav-link" href="#">About_us</a>
         </li>
       </ul>
-      <form class="fp d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <form class="fp d-flex" action="<%= search_products_path %>" method="get">
+  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
        <div id="card-i">
          <% if current_order.present? && current_order.order_items.any? %>
          <%= link_to card_path(current_order.id) do %>

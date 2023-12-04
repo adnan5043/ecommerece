@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   has_many :order_items
   belongs_to :user
   has_many :payments
-  # other order model code...
+   has_many :products, through: :order_items
 
   scope :in_progress, -> { where(status: 'in_progress') }
   before_save :set_subtotal

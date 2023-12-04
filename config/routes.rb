@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
    resources :products do
     collection do
       get 'search'
     end
   end
+=======
+>>>>>>> 27d43c6c6cdd6752216d2719e640a8eb0dba41e9
  resources :orders do
     resources :payments, only: [:new, :create, :index, :destroy]
     resources :order_transactions, only: [:destroy], controller: 'order_transactions'

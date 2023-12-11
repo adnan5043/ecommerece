@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  discount: 1.5
+  valid_til: 2023-12-06
+
+two:
+  code: MyString
+  discount: 1.5
+  valid_til: 2023-12-06

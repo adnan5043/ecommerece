@@ -1,3 +1,2 @@
-
 $('#card-i').html('<%= j render(partial: "cards/card", locals: {id: @order.id}) %>');
-$('#card-item').html('<%= j(render("cards/cards_item")) %>');
+$('#order-items-list').html('<%= j(render("cards/cards_item", order_items: @order_items)) %>');

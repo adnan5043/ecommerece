@@ -1,82 +1,153 @@
 <div class="container mtop">
-  <div class=" d-flex justify-content-between">
+  <div id="order-items-list">
+    <div class="d-flex justify-content-between">
       <h1>WishList</h1>
-  <h5>  <%= link_to "Go Back Home", root_path, class: "nav-link backhome" %></h5>
-  </div>
-  <div class="d-flex justify-content-between">
-    <div class="row">
-      <% @order_items.each do |item| %>
-        <div class="card mb-5 col-lg-11 col-md-11 col-sm-12 cardbg">
-          <div class="row g-0">
-            <div class="col-md-4 itemcarddd">
-              <% image = item.product.images.first %>
-              <% if image.present? %>
-                <%= image_tag(image.image.url, class: 'cardpic') %>
-              <% else %>
-                <p>No image available</p>
-              <% end %>
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
-                <h5 class="card-title"><%= item.product.title %></h5>
-                <p><%= item.product.price %></p>
-              </div>
-              <div class="card-body justify-content-between ">
-                <%= form_for item, remote: true do |f| %>
-                  <%= f.hidden_field :product_id, value: item.product.id %>
-                  <%= f.number_field :quantity, value: item.quantity.to_i, class: 'quantity-input quantitfield' %>
-                  <%= f.submit "Update Cart", class: 'hidden-update-btn', style: 'display: none;' %>
-                  <%= link_to 'Delete', order_item_path(item.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'delete-link Deletebtn'%>
+      <h5><%= link_to "Go Back Home", root_path, class: "nav-link backhome" %></h5>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="row">
+        <% @order_items.each do |item| %>
+          <div class="card mb-5 col-lg-11 col-md-11 col-sm-12 cardbg">
+            <div class="row g-0">
+              <div class="col-md-4 itemcarddd">
+                <% image = item.product.images.first %>
+                <% if image.present? %>
+                  <%= image_tag(image.image.url, class: 'cardpic') %>
+                <% else %>
+                  <p>No image available</p>
                 <% end %>
-                <br>
-                <h3>Subtotal: <span class="subtotal" data-price="<%= item.product.price %>"><%= item.total %></span>$</h3>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><%= item.product.title %></h5>
+                  <p><%= item.product.price %></p>
+                </div>
+                <div class="card-body justify-content-between">
+                  <%= form_for item, remote: true do |f| %>
+                    <%= f.hidden_field :product_id, value: item.product.id %>
+                    <%= f.number_field :quantity, value: item.quantity.to_i, class: 'quantity-input quantitfield' %>
+                    <%= f.submit "Update Cart", class: 'hidden-update-btn', style: 'display: none;' %>
+                    <%= link_to 'Delete', order_item_path(item.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: 'delete-link Deletebtn' %>
+                  <% end %>
+                  <br>
+                  <h3>total: <span class="subtotal" data-price="<%= item.product.price %>"><%= item.total %></span>$</h3>
+                </div>
               </div>
             </div>
           </div>
+        <% end %>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+        <div class="card cardbg">
+           <h3 class="justify-content-center align-middle text-center mt-2">SubTotal: <span class="total-value "><%= current_order.subtotal %></span>$</h3>
+          <%= image_tag 'Payment/f55.png', class: "img-fluid payment " %>
+          <form class="coupnh" id="promoForm">
+            <label  for="promoCode">Enter Promo Code</label>
+            <div class="coupns">
+            <input class="coupni" type="text" id="promoCode" name="promoCode">
+            <button class="coupnb" type="button" onclick="checkPromoCode()">Apply Promo</button>
+          </div>
+          <div id="discountResult"></div>
+          </form>
+
+          <%= render 'payments/new', order_id: @order.id %>
         </div>
-      <% end %>
-    </div>
-    <div class="col-lg-3 col-md-3 col-sm-12 ">
-      <div class="card cardbg">
-        <h3 class="justify-content-center align-middle text-center mt-2">Total: <span class="total-value "><%= current_order.subtotal %></span>$</h3>
-        <%= image_tag 'Payment/f55.png' , class: "img-fluid payment " %>
-        <%= render 'payments/new', order_id: @order.id %>
       </div>
     </div>
   </div>
 </div>
-
+</div>
 <script>
-  $(document).ready(function() {
-    // Function to handle quantity input change
-    function handleQuantityChange() {
-      var quantity = $(this).val();
-      var price = parseFloat($(this).closest('.card-body').find('.subtotal').data('price'));
-      var subtotal = (quantity * price).toFixed(2);
-      $(this).closest('.card-body').find('.subtotal').text(subtotal);
-      updateTotal();
-    }
+$(document).ready(function() {
+  // Function to handle quantity input change
+  function handleQuantityChange() {
+    var quantity = $(this).val();
+    var price = parseFloat($(this).closest('.card-body').find('.subtotal').data('price'));
+    var subtotal = (quantity * price).toFixed(2);
+    $(this).closest('.card-body').find('.subtotal').text(subtotal);
 
-    // Function to update the total
-    function updateTotal() {
-      var total = 0;
-      $('.subtotal').each(function() {
-        total += parseFloat($(this).text());
-      });
-      $('.total-value').text(total.toFixed(2));
-    }
+    // Trigger the update button click event programmatically
+    $(this).closest('form').find('.hidden-update-btn').click();
 
-    // Bind the input change event for quantity inputs
-    $('.quantity-input').on('input', handleQuantityChange);
+    // Update total and discount display
+    updateUI();
+  }
 
-    // Bind the delete link click event using ajax:complete
-    $('.delete-link').on('ajax:complete', function(event, xhr, status) {
-      if (status === 'success') {
-        // Update the total after deletion, whether successful or not
-        updateTotal();
-      }
+  // Function to update the total and discount display
+  function updateUI() {
+    var total = 0;
+    $('.subtotal').each(function() {
+      total += parseFloat($(this).text());
     });
+
+    // Check if a discount is applied
+    var discountResult = $('#discountResult');
+    var discountValue = parseFloat(discountResult.data('discount'));
+
+    // Apply discount if it exists
+    if (!isNaN(discountValue) && discountValue > 0) {
+      total *= (1 - discountValue);
+      discountResult.text('Discount Applied: ' + (discountValue * 100) + '%');
+    } else {
+      discountResult.text('');
+    }
+
+    $('.total-value').text(total.toFixed(2));
+  }
+
+  // Bind the input change event for quantity inputs
+  $('.quantity-input').on('input', handleQuantityChange);
+
+  // Bind the delete link click event using ajax:complete
+  $('.delete-link').on('ajax:complete', function(event, xhr, status) {
+    if (status === 'success') {
+      // Update the total after deletion, whether successful or not
+      updateUI();
+    }
   });
+
+  // Function to update discount display
+  function updateDiscountResult(discountValue) {
+    var discountResult = $('#discountResult');
+    if (!isNaN(discountValue) && discountValue > 0) {
+      discountResult.text('Discount Applied: ' + (discountValue * 100) + '%');
+    } else {
+      discountResult.text('');
+    }
+  }
+
+  // Function to check promo code
+  function checkPromoCode() {
+    const promoCode = $('#promoCode').val();
+    console.log("Checking Promo Code:", promoCode);
+
+    // Make AJAX request to Rails backend
+    fetch('/check_promo_code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ promoCode: promoCode })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Response Data:", data);
+
+        // Update UI with discount value
+        $('#discountResult').data('discount', data.discount);
+        updateDiscountResult(data.discount);
+        updateUI(); // Update total after discount is applied
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  // Bind the promo code check on button click
+  $('#promoForm button').on('click', checkPromoCode);
+});
+
 </script>
 
 

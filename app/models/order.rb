@@ -2,7 +2,7 @@ class Order < ApplicationRecord
   has_many :order_items
   belongs_to :user
   has_many :payments
-   has_many :products, through: :order_items
+  has_many :products, through: :order_items
   scope :in_progress, -> { where(status: 'in_progress') }
   before_save :set_subtotal
 
@@ -10,11 +10,9 @@ class Order < ApplicationRecord
     self.subtotal = calculate_subtotal
     save
   end
-
   def calculate_subtotal
     order_items.sum(&:total)
   end
-
 
   private
 

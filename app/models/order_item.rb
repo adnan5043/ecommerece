@@ -11,12 +11,9 @@ class OrderItem < ApplicationRecord
       product.price
     end
   end
-
-
   def total
     quantity * product.price
   end
-
 
   private
 
@@ -25,7 +22,6 @@ class OrderItem < ApplicationRecord
       errors.add(:base, "You cannot add your own products to your cart")
     end
   end
-
   def set_unit_price_and_total
     self[:unit_price] = unit_price
     self[:total] = total

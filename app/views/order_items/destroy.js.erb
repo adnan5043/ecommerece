@@ -1,5 +1,4 @@
 // Remove the element with the ID corresponding to the destroyed item
 $('#card-item-' + <%= @destroyed_item.id.to_json %>).remove();
-
 // Update the total after successful deletion
 $('.total-value').text('<%= @order.subtotal.to_f %>'); // Assuming that subtotal is a numeric value

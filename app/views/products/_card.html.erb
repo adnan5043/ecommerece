@@ -16,43 +16,32 @@
           <div class="card-body d-flex justify-content-between">
             <%= form_for @order_item, remote: true do |f| %>
               <%= csrf_meta_tags %>
-               <% if user_signed_in? && current_user != product.user %>
-              <%= f.hidden_field :product_id, value: product.id %>
-              <%= f.number_field :quantity, value: 1, main: 1, class: "field" %>
-
+              <% if user_signed_in? && current_user != product.user %>
+                <%= f.hidden_field :product_id, value: product.id %>
+                <%= f.number_field :quantity, value: 1, main: 1, class: "field" %>
                 <%= f.submit "Add to Cart" %>
               <% end %>
             <% end %>
-
           </div>
         </div>
       </div>
     <% end %>
   </div>
 </div>
-
-<!-- Add this modal at the end of your HTML body -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <%# <div class="modal-header">
-        <h5 class="modal-title" id="successModalLabel">Success</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div> %>
       <div class="modal-body">
         <%= flash[:success] %>
       </div>
     </div>
   </div>
 </div>
-<!-- Add this script at the end of your HTML body -->
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const flashMessage = '<%= flash[:success] %>';
-
     if (flashMessage) {
       $('#successModal').modal('show');
-      // Clear the flash message so that it doesn't show on subsequent page loads
       '<%= flash[:success] = nil %>';
     }
   });

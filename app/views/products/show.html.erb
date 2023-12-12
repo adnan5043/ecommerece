@@ -1,52 +1,36 @@
-
 <div class="container mtop">
-<p id="notice"><%= notice %></p>
-
-<h1>Product Details</h1>
-
-
-<p>
-  <strong>Title:</strong>
-  <%= @product.title %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= number_to_currency(@product.price, precision: 2, strip_insignificant_zeros: true) %>
-</p>
-
-<p>
-  <strong>Serial Number:</strong>
- <%= @product.serial_number %>
-</p>
-
-<div class="image-gallery">
-  <% @images.each do |image| %>
-    <% if image.image.present? %>
-      <%= image_tag(image.image.url, class: 'product-image') %>
-    <% else %>
-      <p>No image available</p>
+  <p id="notice"><%= notice %></p>
+  <h1>Product Details</h1>
+  <p>
+    <strong>Title:</strong>
+    <%= @product.title %>
+  </p>
+  <p>
+    <strong>Price:</strong>
+    <%= number_to_currency(@product.price, precision: 2, strip_insignificant_zeros: true) %>
+  </p>
+  <p>
+    <strong>Serial Number:</strong>
+    <%= @product.serial_number %>
+  </p>
+  <div class="image-gallery">
+    <% @images.each do |image| %>
+      <% if image.image.present? %>
+        <%= image_tag(image.image.url, class: 'product-image') %>
+      <% else %>
+        <p>No image available</p>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+  <div>
+    <% if user_signed_in? && current_user == @product.user %>
+    <%= link_to 'Edit', edit_product_path(@product) %>|
+    <%= link_to 'Delete', @product, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </div>
+  <br>
+  <br>
+  <%= render 'comments/form' %>
+  <h2>Comments</h2>
+  <%= render @product.comments %>
 </div>
-<div>
-<% if user_signed_in? && current_user == @product.user %>
-<%= link_to 'Edit', edit_product_path(@product) %>|
-<%= link_to 'Delete', @product, method: :delete, data: { confirm: 'Are you sure?' } %>
-<%end%>
-</div>
-<br>
-
-<%# <%= render 'products/addcart' %>
-<br>
-<!-- <h2>Add a comment:</h2> -->
-<%= render 'comments/form' %>
-
-<h2>Comments</h2>
-<%= render @product.comments %>
-
-
-</div>
-
-
-

@@ -49,42 +49,29 @@
           </div>
           <div id="discountResult"></div>
           </form>
-
           <%= render 'payments/new', order_id: @order.id %>
         </div>
       </div>
     </div>
   </div>
 </div>
-</div>
 <script>
 $(document).ready(function() {
-  // Function to handle quantity input change
   function handleQuantityChange() {
     var quantity = $(this).val();
     var price = parseFloat($(this).closest('.card-body').find('.subtotal').data('price'));
     var subtotal = (quantity * price).toFixed(2);
     $(this).closest('.card-body').find('.subtotal').text(subtotal);
-
-    // Trigger the update button click event programmatically
     $(this).closest('form').find('.hidden-update-btn').click();
-
-    // Update total and discount display
     updateUI();
   }
-
-  // Function to update the total and discount display
   function updateUI() {
     var total = 0;
     $('.subtotal').each(function() {
       total += parseFloat($(this).text());
     });
-
-    // Check if a discount is applied
     var discountResult = $('#discountResult');
     var discountValue = parseFloat(discountResult.data('discount'));
-
-    // Apply discount if it exists
     if (!isNaN(discountValue) && discountValue > 0) {
       total *= (1 - discountValue);
       discountResult.text('Discount Applied: ' + (discountValue * 100) + '%');
@@ -95,18 +82,12 @@ $(document).ready(function() {
     $('.total-value').text(total.toFixed(2));
   }
 
-  // Bind the input change event for quantity inputs
   $('.quantity-input').on('input', handleQuantityChange);
-
-  // Bind the delete link click event using ajax:complete
   $('.delete-link').on('ajax:complete', function(event, xhr, status) {
     if (status === 'success') {
-      // Update the total after deletion, whether successful or not
       updateUI();
     }
   });
-
-  // Function to update discount display
   function updateDiscountResult(discountValue) {
     var discountResult = $('#discountResult');
     if (!isNaN(discountValue) && discountValue > 0) {
@@ -115,13 +96,10 @@ $(document).ready(function() {
       discountResult.text('');
     }
   }
-
   // Function to check promo code
   function checkPromoCode() {
     const promoCode = $('#promoCode').val();
     console.log("Checking Promo Code:", promoCode);
-
-    // Make AJAX request to Rails backend
     fetch('/check_promo_code', {
       method: 'POST',
       headers: {
@@ -133,21 +111,15 @@ $(document).ready(function() {
       .then(response => response.json())
       .then(data => {
         console.log("Response Data:", data);
-
-        // Update UI with discount value
         $('#discountResult').data('discount', data.discount);
         updateDiscountResult(data.discount);
-        updateUI(); // Update total after discount is applied
+        updateUI();
       })
       .catch(error => {
         console.error('Error:', error);
       });
   }
-
-  // Bind the promo code check on button click
   $('#promoForm button').on('click', checkPromoCode);
 });
 
 </script>
-
-

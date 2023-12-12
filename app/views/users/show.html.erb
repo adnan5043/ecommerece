@@ -1,17 +1,11 @@
-
 <div class="container mtop">
-<% if current_user.image_url.present? %>
-  <p>
-    <!-- <strong>image:</strong> -->
-    <img class="img-fluid profiles" src="<%= current_user.image_url %>">
-  </p>
-<% end %>
-
-<h5>Name: <%= @user.name %></h5>
-
-<h6>Mobile: <%= @user.phone_number %></h6>
-<p>Email: <%= @user.email %></p>
-
-
-<%= button_to 'Logout', destroy_user_session_path, :class =>'buttons', method: "delete", data: { confirm: 'Are you sure?' } %>
+  <% if current_user.image_url.present? %>
+    <p>
+      <img class="img-fluid profiles" src="<%= current_user.image_url %>">
+    </p>
+  <% end %>
+  <h5>Name: <%= @user.name %></h5>
+  <h6>Mobile: <%= @user.phone_number %></h6>
+  <p>Email: <%= @user.email %></p>
+  <%= button_to 'Logout', destroy_user_session_path, :class =>'buttons', method: "delete", data: { confirm: 'Are you sure?' } %>
 </div>

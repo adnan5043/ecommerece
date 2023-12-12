@@ -20,18 +20,17 @@
         </li>
       </ul>
       <form class="fp d-flex" action="<%= search_products_path %>" method="get">
-  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
-
-       <div id="card-i">
-         <% if current_order.present? && current_order.order_items.any? %>
-         <%= link_to card_path(current_order.id) do %>
-         <span class="bi bi-cart-plus-fill caricone"></span>
-         <span class="cartsize"><%= current_order.order_items.size %></span>
-         <% end %>
-         <% end %>
-        </div>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <div id="card-i">
+        <% if current_order.present? && current_order.order_items.any? %>
+        <%= link_to card_path(current_order.id) do %>
+        <span class="bi bi-cart-plus-fill caricone"></span>
+        <span class="cartsize"><%= current_order.order_items.size %></span>
+        <% end %>
+        <% end %>
+      </div>
       <div class="justify-content-end align-items-center">
         <div class="group d-flex flex-column justify-content-end align-items-center">
           <% if user_signed_in? %>
@@ -39,7 +38,7 @@
               <img class="img-fluid profile" src="<%= current_user.image_url %>">
             <% end %>
             <strong><%= link_to current_user.name, profile_path, class: "linktitle" %></strong>
-          <% else %>
+            <% else %>
             <%= link_to " Sign In", new_user_session_path, style: 'color:white; background-color:black; padding:6px; margin-bottom:1rem;', :class => 'navbar-brand  buttons' %>
           <% end %>
         </div>
@@ -47,7 +46,3 @@
     </div>
   </div>
 </nav>
-
-
-
-

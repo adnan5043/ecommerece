@@ -9,24 +9,22 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title %>
   </div>
   <br>
-
   <div class="field">
     <%= form.label :price %>
     <%= form.text_field :price %>
   </div>
   <br>
-    <div class="field">
-<%= form.fields_for :images do |image_form| %>
-  <%= image_form.file_field :image, multiple: true, name: "product[images_attributes][][image]" %>
-<% end %>
+  <div class="field">
+    <%= form.fields_for :images do |image_form| %>
+      <%= image_form.file_field :image, multiple: true, name: "product[images_attributes][][image]" %>
+    <% end %>
   </div>
-<br>
+  <br>
   <div class="actions ml-2">
     <%= form.submit %>
   </div>
